@@ -3,6 +3,11 @@ uuid = "2815cbbd-0d7d-431b-a8da-1940906b5714"
 authors = ["fchrstou <filippos.christou@ikr.uni-stuttgart.de> and contributors"]
 version = "0.1.0"
 
+[deps]
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
 [compat]
 julia = "1.8"
 

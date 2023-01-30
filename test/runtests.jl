@@ -1,6 +1,6 @@
-using MultiGraphs
-using Test
+using MultiGraphs, Graphs
+using Test, TestSetExtensions
 
 @testset "MultiGraphs.jl" begin
-    # Write your tests here.
+    @includetests ["graphs"]
 end
