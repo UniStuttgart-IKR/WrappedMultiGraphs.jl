@@ -1,3 +1,0 @@
-var documenterSearchIndex = {"docs":
-[{"location":"usage/#Usage","page":"Usage and Examples","title":"Usage","text":"","category":"section"},{"location":"","page":"Introduction","title":"Introduction","text":"Welcome to MultiGraphs.jl","category":"page"},{"location":"API/#API","page":"API","title":"API","text":"","category":"section"},{"location":"API/","page":"API","title":"API","text":"Modules = [MultiGraphs]\nPrivate = false\nOrder   = [:function, :type]","category":"page"},{"location":"API/#Index","page":"API","title":"Index","text":"","category":"section"},{"location":"API/","page":"API","title":"API","text":"","category":"page"}]
-}

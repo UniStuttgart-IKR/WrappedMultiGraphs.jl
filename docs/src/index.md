@@ -1,1 +1,1 @@
-Welcome to MultiGraphs.jl
+# MultiGraphs.jl

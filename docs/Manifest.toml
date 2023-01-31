@@ -2,7 +2,7 @@
 
 julia_version = "1.8.4"
 manifest_format = "2.0"
-project_hash = "039ae0ee23d69aa922275702a29c4fea502ec5b4"
+project_hash = "1430b3f889657e0d8d070d874b5b700271f6f57d"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -113,7 +113,7 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
 [[deps.MultiGraphs]]
-deps = ["Graphs"]
+deps = ["DocStringExtensions", "Graphs", "LinearAlgebra"]
 path = ".."
 uuid = "2815cbbd-0d7d-431b-a8da-1940906b5714"
 version = "0.1.0"
