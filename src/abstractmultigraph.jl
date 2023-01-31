@@ -25,3 +25,16 @@ inneighbors(mg::AbstractMultiGraph, u::Integer) = unique(inneighbors(graph(mg), 
 outneighbors(mg::AbstractMultiGraph, u::Integer) = unique(outneighbors(graph(mg), u))
 neighbors(mg::AbstractMultiGraph, u::Integer) = unique(neighbors(graph(mg), u))
 all_neighbors(mg::AbstractMultiGraph, u::Integer) = unique(all_neighbors(graph(mg), u))
+
+# extended functionality
+count_edges(mg::AbstractMultiGraph, e::AbstractEdge) = count(==(e), edges(mg))
+count_edges(mg::AbstractMultiGraph, s::T, d::T) where T<:Integer = count_edges(mg, Edge(s,d))
+
+has_edge(mg::AbstractMultiGraph, e::AbstractEdge, c::Integer) = count(==(e), edges(mg)) >= c
+has_edge(mg::AbstractMultiGraph{T}, s::T, d::T, c::T) where T<:Integer = has_edge(mg, Edge(s,d), c)
+
+add_edge!(mg::AbstractMultiGraph, e::AbstractEdge, c::Integer) = foreach(1:c) do _; add_edge!(mg, e); end 
+add_edge!(mg::AbstractMultiGraph, s::T, d::T, c::T) where T<:Integer = add_edge!(mg, Edge(s,d), c)
+
+rem_edge!(mg::AbstractMultiGraph, e::AbstractEdge, c::Integer) = foreach(1:c) do _; rem_edge!(mg, e); end 
+rem_edge!(mg::AbstractMultiGraph, s::T, d::T, c::T) where T<:Integer = rem_edge!(mg, Edge(s,d), c)
