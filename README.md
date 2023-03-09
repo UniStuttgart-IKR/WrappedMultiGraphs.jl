@@ -1,5 +1,8 @@
 # MultiGraphs.jl
 
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://UniStuttgart-IKR.github.io/MultiGraphs.jl/dev)
+[![codecov.io](http://codecov.io/github/UniStuttgart-IKR/MultiGraphs.jl/coverage.svg?branch=main)](http://codecov.io/github/UniStuttgart-IKR/MultiGraphs.jl?branch=main)
+
 A simplistic julia package implementing multi graphs.
 This package aims to be fully compliant with [Graphs.jl](https://github.com/JuliaGraphs/Graphs.jl).
 

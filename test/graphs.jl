@@ -26,6 +26,9 @@
     @test rem_vertices!(mg, [1,3]) == [5,2,4]
     @test rem_vertex!(mg, 1)
     @test !rem_vertex!(mg, 3)
+
+    mdg = todirected(MultiGraph(complete_graph(3)))
+    @test ne(mdg) == 6
 end
 
 @testset "bidirectional" begin
@@ -48,4 +51,8 @@ end
     @test inneighbors(mdg, 1) == [2]
     @test outneighbors(mdg, 1) == [2,3]
     @test all_neighbors(mdg, 1) == [2,3]
+
+    mg = toundirected(mdg)
+    @test ne(mg) == 3
+    @test multiplicity(mg, Edge(1,2)) == 2
 end

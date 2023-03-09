@@ -1,4 +1,4 @@
-using Documenter, MultiGraphs
+using Documenter, MultiGraphs, Graphs
 
 makedocs(sitename="MultiGraphs.jl",
     pages = [

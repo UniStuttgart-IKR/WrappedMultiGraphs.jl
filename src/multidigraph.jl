@@ -1,6 +1,10 @@
+"""
+$(TYPEDEF)
+$(TYPEDFIELDS)
+"""
 mutable struct MultiDiGraph{T <: Integer} <: AbstractMultiGraph{T}
+    "The wrapped graph"
     graph::SimpleDiGraph{T}
-
     MultiDiGraph{T}(args...) where T<:Integer = new{T}(SimpleDiGraph{T}(args...))
     MultiDiGraph{T}(sg::SimpleDiGraph{T}) where T<:Integer = new{T}(sg)
 end
@@ -12,11 +16,11 @@ end
 
 is_directed(::Type{<:MultiDiGraph}) = true
 is_directed(mg::MultiDiGraph) = true
-#badj(g::MultiDiGraph, args...) = badj(graph(g), args...)
+badj(g::MultiDiGraph, args...) = badj(getgraph(g), args...)
 
 
 function add_edge!(mg::MultiDiGraph{T}, e::SimpleDiGraphEdge{T}) where T
-    g = graph(mg)
+    g = getgraph(mg)
     s, d = T.(Tuple(e))
     verts = vertices(g)
     (s in verts && d in verts) || return false  # edge out of bounds
@@ -34,3 +38,30 @@ function add_edge!(mg::MultiDiGraph{T}, e::SimpleDiGraphEdge{T}) where T
     return true  # edge successfully added
 end
 
+nonmultigraph(mg::MultiDiGraph{T}) where T<:Integer = SimpleDiGraph{T}(length(unique(edges(mg))), unique.(Graphs.SimpleGraphs.fadj(mg)), unique.(Graphs.SimpleGraphs.badj(mg)))
+todirected(mg::MultiDiGraph) = mg
+"""
+$(TYPEDSIGNATURES)
+
+Convert to an undirected graph
+"""
+function toundirected(mg::MultiDiGraph)
+    dedg = Dict(e => 0 for ed in edges(mg) for e in [ed, reverse(ed)])
+    dunedg = Dict(e => 0 for e in undirectededges(mg))
+    for e in edges(mg)
+        if dedg[e] >= dedg[reverse(e)]
+            dunedg[undirectededge(e)] += 1
+        end
+        dedg[e] += 1
+    end
+    mug = MultiGraph(SimpleGraph(nv(mg)))
+    for (k,v) in dunedg
+        for _ in 1:v
+            add_edge!(mug, k)
+        end
+    end
+    mug
+end
+
+undirectededges(g::AbstractGraph) = undirectededge.(edges(g))
+undirectededge(e::E) where E<:AbstractEdge = src(e) > dst(e) ? reverse(e) : e
