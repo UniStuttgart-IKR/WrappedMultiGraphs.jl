@@ -1,4 +1,4 @@
-module WMultiGraphs
+module WrappedMultiGraphs
 
 export MultiGraph, MultiDiGraph, SingleMultiEdge, multiplicity, asmultiedges, todirected, toundirected, getgraph
 

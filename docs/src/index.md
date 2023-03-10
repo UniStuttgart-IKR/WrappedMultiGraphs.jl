@@ -1,4 +1,4 @@
-# WMultiGraphs.jl
+# WrappedMultiGraphs.jl
 
 A simplistic julia package implementing multi graphs.
 This package aims to be fully compliant with [Graphs.jl](https://github.com/JuliaGraphs/Graphs.jl).

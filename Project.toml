@@ -1,4 +1,4 @@
-name = "WMultiGraphs"
+name = "WrappedMultiGraphs"
 uuid = "2815cbbd-0d7d-431b-a8da-1940906b5714"
 authors = ["fchrstou <filippos.christou@ikr.uni-stuttgart.de> and contributors"]
 version = "0.1.0"

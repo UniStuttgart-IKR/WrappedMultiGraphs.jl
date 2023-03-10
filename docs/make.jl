@@ -1,6 +1,6 @@
-using Documenter, WMultiGraphs, Graphs
+using Documenter, WrappedMultiGraphs, Graphs
 
-makedocs(sitename="WMultiGraphs.jl",
+makedocs(sitename="WrappedMultiGraphs.jl",
     pages = [
         "Introduction" => "index.md",
         "Usage and Examples" => "usage.md",
@@ -8,5 +8,5 @@ makedocs(sitename="WMultiGraphs.jl",
     ])
 
 deploydocs(
-    repo = "github.com/UniStuttgart-IKR/WMultiGraphs.jl.git",
+    repo = "github.com/UniStuttgart-IKR/WrappedMultiGraphs.jl.git",
 )
