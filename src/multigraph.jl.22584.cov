@@ -1,0 +1,47 @@
+        - """
+        - $(TYPEDEF)
+        - $(TYPEDFIELDS)
+        - """
+        - struct MultiGraph{T <: Integer} <: AbstractMultiGraph{T}
+        -     "The wrapped graph"
+        -     graph::SimpleGraph{T}
+        3     MultiGraph{T}(args...) where T<:Integer = new{T}(SimpleGraph{T}(args...))
+        7     MultiGraph{T}(sg::SimpleGraph{T}) where T<:Integer = new{T}(sg)
+        - end
+        - 
+        7 function MultiGraph(args...) 
+        8     sg = SimpleGraph(args...)
+        7     MultiGraph{eltype(sg)}(sg)
+        - end
+        - 
+        1 is_directed(::Type{<:MultiGraph}) = false
+        - is_directed(mg::MultiGraph) = false
+        - 
+        9 function add_edge!(mg::MultiGraph{T}, e::SimpleGraphEdge{T}) where T
+        9     g = getgraph(mg)
+        9     s, d = T.(Tuple(e))
+        9     verts = vertices(g)
+        9     (s in verts && d in verts) || return false  # edge out of bounds
+        9     @inbounds list = g.fadjlist[s]
+        9     index = searchsortedfirst(list, d)
+        -     #    don't check about double edges
+        -     #    @inbounds (index <= length(list) && list[index] == d) && return false  # edge already in graph
+        9     insert!(list, index, d)
+        - 
+        9     g.ne += 1
+        9     s == d && return true  # selfloop
+        - 
+        9     @inbounds list = g.fadjlist[d]
+        9     index = searchsortedfirst(list, s)
+        9     insert!(list, index, s)
+        9     return true  # edge successfully added
+        - end
+        - 
+        - nonmultigraph(mg::MultiGraph{T}) where T<:Integer = SimpleGraph{T}(length(unique(edges(mg))), unique.(Graphs.SimpleGraphs.fadj(mg)))
+        - toundirected(mg::MultiGraph) = mg
+        - """
+        - $(TYPEDSIGNATURES)
+        - 
+        - Convert to a directed graph
+        - """
+        1 todirected(mg::MultiGraph) = MultiDiGraph(SimpleDiGraph(getgraph(mg)))

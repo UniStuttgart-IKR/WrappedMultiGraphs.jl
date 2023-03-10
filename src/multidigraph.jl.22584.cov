@@ -1,0 +1,67 @@
+        - """
+        - $(TYPEDEF)
+        - $(TYPEDFIELDS)
+        - """
+        - mutable struct MultiDiGraph{T <: Integer} <: AbstractMultiGraph{T}
+        -     "The wrapped graph"
+        -     graph::SimpleDiGraph{T}
+        3     MultiDiGraph{T}(args...) where T<:Integer = new{T}(SimpleDiGraph{T}(args...))
+        6     MultiDiGraph{T}(sg::SimpleDiGraph{T}) where T<:Integer = new{T}(sg)
+        - end
+        - 
+        6 function MultiDiGraph(args...) 
+        7     sg = SimpleDiGraph(args...)
+        6     MultiDiGraph{eltype(sg)}(sg)
+        - end
+        - 
+        1 is_directed(::Type{<:MultiDiGraph}) = true
+        - is_directed(mg::MultiDiGraph) = true
+        - badj(g::MultiDiGraph, args...) = badj(getgraph(g), args...)
+        - 
+        - 
+        6 function add_edge!(mg::MultiDiGraph{T}, e::SimpleDiGraphEdge{T}) where T
+        6     g = getgraph(mg)
+        6     s, d = T.(Tuple(e))
+        6     verts = vertices(g)
+        6     (s in verts && d in verts) || return false  # edge out of bounds
+        6     @inbounds list = g.fadjlist[s]
+        6     index = searchsortedfirst(list, d)
+        -     #    don't check about double edges
+        - #    @inbounds (index <= length(list) && list[index] == d) && return false  # edge already in graph
+        6     insert!(list, index, d)
+        - 
+        6     g.ne += 1
+        - 
+        6     @inbounds list = g.badjlist[d]
+        6     index = searchsortedfirst(list, s)
+        6     insert!(list, index, s)
+        6     return true  # edge successfully added
+        - end
+        - 
+        - nonmultigraph(mg::MultiDiGraph{T}) where T<:Integer = SimpleDiGraph{T}(length(unique(edges(mg))), unique.(Graphs.SimpleGraphs.fadj(mg)), unique.(Graphs.SimpleGraphs.badj(mg)))
+        - todirected(mg::MultiDiGraph) = mg
+        - """
+        - $(TYPEDSIGNATURES)
+        - 
+        - Convert to an undirected graph
+        - """
+        1 function toundirected(mg::MultiDiGraph)
+        1     dedg = Dict(e => 0 for ed in edges(mg) for e in [ed, reverse(ed)])
+        1     dunedg = Dict(e => 0 for e in undirectededges(mg))
+        2     for e in edges(mg)
+        8         if dedg[e] >= dedg[reverse(e)]
+        6             dunedg[undirectededge(e)] += 1
+        -         end
+        8         dedg[e] += 1
+        8     end
+        1     mug = MultiGraph(SimpleGraph(nv(mg)))
+        3     for (k,v) in dunedg
+        2         for _ in 1:v
+        3             add_edge!(mug, k)
+        3         end
+       14     end
+        1     mug
+        - end
+        - 
+        1 undirectededges(g::AbstractGraph) = undirectededge.(edges(g))
+       22 undirectededge(e::E) where E<:AbstractEdge = src(e) > dst(e) ? reverse(e) : e

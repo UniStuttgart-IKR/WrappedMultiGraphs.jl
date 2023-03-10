@@ -2,7 +2,7 @@
 
 Start by using all the the needed packages for this walkthrough tutorial and create a `MultiGraph`.
 ```jldoctest walkthrough 
-julia> using MultiGraphs, Graphs
+julia> using WMultiGraphs, Graphs
 
 julia> mg = MultiGraph(complete_graph(3))
 {3, 3} undirected multi Int64 graph

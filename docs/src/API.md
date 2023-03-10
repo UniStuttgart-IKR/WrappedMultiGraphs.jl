@@ -1,7 +1,7 @@
 # API
 
 ```@autodocs
-Modules = [MultiGraphs]
+Modules = [WMultiGraphs]
 Private = false
 Order   = [:function, :type]
 ```

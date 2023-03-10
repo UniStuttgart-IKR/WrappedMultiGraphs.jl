@@ -1,6 +1,6 @@
-using MultiGraphs, Graphs
+using WMultiGraphs, Graphs
 using Test, TestSetExtensions
 
-@testset "MultiGraphs.jl" begin
+@testset "WMultiGraphs.jl" begin
     @includetests ["graphs", "more"]
 end
